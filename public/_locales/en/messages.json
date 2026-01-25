@@ -1,0 +1,17 @@
+{
+  "extName": {
+    "message": "Gemini Chat Quick Delete: Minimalist Tool"
+  },
+  "extDescription": {
+    "message": "A minimalist Gemini conversation deletion tool: simply click the trash can icon on the chat list to delete the conversation."
+  },
+  "popup_title": {
+    "message": "Gemini Chat Quick Delete: Minimalist Tool"
+  },
+  "rate_button": {
+    "message": "Rate"
+  },
+  "feedback_button": {
+    "message": "Feedback & Contact"
+  }
+}

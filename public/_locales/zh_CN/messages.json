@@ -1,0 +1,17 @@
+{
+  "extName": {
+    "message": "Gemini对话快速删除：极简工具"
+  },
+  "extDescription": {
+    "message": "Gemini对话极简删除工具，点击对话列表上的垃圾桶图标即可删除此条对话。"
+  },
+  "popup_title": {
+    "message": "Gemini对话快速删除：极简工具"
+  },
+  "rate_button": {
+    "message": "评分"
+  },
+  "feedback_button": {
+    "message": "反馈与联系"
+  }
+}

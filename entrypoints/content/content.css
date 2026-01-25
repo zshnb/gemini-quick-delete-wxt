@@ -1,0 +1,27 @@
+/* 自定义删除按钮样式 */
+.wxt-quick-delete-btn {
+    display: none; /* 默认隐藏 */
+    position: absolute;
+    right: 2rem; /* 放在原生"更多选项"按钮左侧 */
+    top: 54%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    color: #c4c7c5; /* Gemini 默认灰色 */
+}
+
+.wxt-quick-delete-btn svg:hover {
+    fill: #e92d18;
+}
+
+[data-testid="conversation-list-item"]:hover .wxt-quick-delete-btn,
+.conversations-container .conversation-items-container:hover .wxt-quick-delete-btn {
+    display: block;
+}
