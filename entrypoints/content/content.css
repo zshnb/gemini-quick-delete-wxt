@@ -21,7 +21,6 @@
     fill: #e92d18;
 }
 
-[data-testid="conversation-list-item"]:hover .wxt-quick-delete-btn,
-.conversations-container .conversation-items-container:hover .wxt-quick-delete-btn {
+conversations-list gem-nav-list-item:hover .wxt-quick-delete-btn {
     display: block;
 }

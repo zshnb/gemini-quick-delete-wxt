@@ -40,8 +40,9 @@ export default defineContentScript({
 
 			// 1. 找到该行原生的"更多选项"按钮 (通常是三个点)
 			// Gemini的DOM结构中，该按钮通常是一个 button，且包含特定的 aria-label 或 svg
-			const menuButton = rowElement.querySelector('button.conversation-actions-menu-button') as HTMLElement;
+			const menuButton = rowElement.querySelector('gem-icon-button[data-test-id="actions-menu-button"]') as HTMLElement;
 
+			// gem-icon-button _ngcontent-ng-c738427979="" type="onSurface" theme="lm" data-test-id="actions-menu-button"
 			if (!menuButton) {
 				console.error('无法找到原生菜单按钮');
 				return;
@@ -72,7 +73,7 @@ export default defineContentScript({
 
 			// 5. 点击确认按钮
 			// 通常确认按钮是 "Delete" 或 "删除"，且位于右下角
-			const confirmButton = dialog.querySelector('button[data-test-id="confirm-button"]') as HTMLElement;
+			const confirmButton = dialog.querySelector('gem-button[data-test-id="confirm-button"]') as HTMLElement;
 
 			if (confirmButton) {
 				confirmButton.click();
@@ -103,7 +104,7 @@ export default defineContentScript({
 			// 查找所有的对话链接/行
 			// Gemini 侧边栏的对话通常是 <a href="/app/..."> 或特定 class
 			// 选择器可能需要根据 Gemini 更新进行微调
-			const chatRows = document.querySelectorAll('.conversations-container .conversation-items-container');
+			const chatRows = document.querySelectorAll('conversations-list gem-nav-list-item');
 			chatRows.forEach((row) => {
 				processRow(row as HTMLElement);
 			});
