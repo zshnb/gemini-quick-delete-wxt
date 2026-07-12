@@ -39,10 +39,11 @@ export default defineContentScript({
 			e.stopPropagation();
 
 			// 1. 找到该行原生的"更多选项"按钮 (通常是三个点)
-			// Gemini的DOM结构中，该按钮通常是一个 button，且包含特定的 aria-label 或 svg
-			const menuButton = rowElement.querySelector('gem-icon-button[data-test-id="actions-menu-button"]') as HTMLElement;
+			// Gemini 的 DOM 结构会在 button 和 gem-icon-button 之间变化。
+			const menuButton = rowElement.querySelector(
+				'button[data-test-id="actions-menu-button"], gem-icon-button[data-test-id="actions-menu-button"]',
+			) as HTMLElement | null;
 
-			// gem-icon-button _ngcontent-ng-c738427979="" type="onSurface" theme="lm" data-test-id="actions-menu-button"
 			if (!menuButton) {
 				console.error('无法找到原生菜单按钮');
 				return;
@@ -72,12 +73,28 @@ export default defineContentScript({
 			if (!dialog) return;
 
 			// 5. 点击确认按钮
-			// 通常确认按钮是 "Delete" 或 "删除"，且位于右下角
-			const confirmButton = dialog.querySelector('gem-button[data-test-id="confirm-button"]') as HTMLElement;
+			// 当前 Gemini 将 cdkfocusinitial 放在 Delete 按钮的 gem-button 容器上，
+			// 真正可点击的是容器内部的原生 button。
+			const confirmButton =
+				dialog.querySelector<HTMLButtonElement>(
+					[
+						'mat-dialog-actions button[cdkfocusinitial]:not([disabled])',
+						'mat-dialog-actions [cdkfocusinitial] button:not([disabled])',
+					].join(', '),
+				) ??
+				Array.from(
+					dialog.querySelectorAll<HTMLButtonElement>('mat-dialog-actions button:not([disabled])'),
+				).find((button) => {
+					const text = button.textContent?.replace(/\s+/g, ' ').trim().toLowerCase();
+					return text === 'delete' || text === '删除';
+				});
 
-			if (confirmButton) {
-				confirmButton.click();
+			if (!confirmButton) {
+				console.error('未找到删除确认按钮，请检查弹窗 DOM');
+				return;
 			}
+
+			confirmButton.click();
 		};
 
 		// 处理单个对话行
